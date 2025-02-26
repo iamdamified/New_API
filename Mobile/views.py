@@ -3,8 +3,11 @@ from Blog.models import Post
 from .serializers import PostSerializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status, permissions, authentication
 # Create your views here.
-
+# authentication_classes = []  # Disable CSRF for testing (remove in production)
+# permission_classes = [permissions.AllowAny]
 
 @api_view(["GET"])
 def mobile_home(request):
@@ -37,10 +40,11 @@ def mobile_post_delete(request, id):
     post_detail.delete() #delete
     return Response({"Success": "Post has been successfully deleted"})
 
-
+@csrf_exempt
 @api_view(["POST"])
 def mobile_post_create(request):
     new_data = PostSerializers(data=request.data)
     if new_data.is_valid():
         new_data.save()
-        return Response(new_data.data)
+        return Response({'message': 'Data created!'}, status=status.HTTP_201_CREATED)
+        # return Response(new_data.data)

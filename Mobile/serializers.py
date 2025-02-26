@@ -7,4 +7,6 @@ class PostSerializers(serializers.ModelSerializer):
         model = Post
         fields = ["id", "title", "content", "author", "date_posted"]
 
+        # except = ["id", "title"]
+
         # fields = "__all__"
