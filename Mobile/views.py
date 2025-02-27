@@ -40,7 +40,7 @@ def mobile_post_delete(request, id):
     post_detail.delete() #delete
     return Response({"Success": "Post has been successfully deleted"})
 
-@csrf_exempt
+
 @api_view(["POST"])
 def mobile_post_create(request):
     new_data = PostSerializers(data=request.data)
